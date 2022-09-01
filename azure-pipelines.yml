@@ -10,10 +10,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'a754273f-98a8-44f7-a2d7-539e9418d063'
+    KeyVaultName: 'anshgkeyvault'
+    SecretsFilter: '*'
+    RunAsPreJob: false
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: CmdLine@2
+  inputs:
+    script: 'echo $(Pass5) > secret.txt'
